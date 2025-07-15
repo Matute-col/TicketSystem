@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Tickets – Administrador</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+  <h2 class="mb-4">Gestión de Tickets – Administrador</h2>
+
+  <!-- Filtro por estado -->
+  <form th:action="@{/admin/tickets}" method="get" class="row g-3 mb-4">
+    <div class="col-auto">
+      <label for="estado" class="form-label">Filtrar por estado:</label>
+      <select name="estado" id="estado" class="form-select">
+        <option value="">-- Todos --</option>
+        <option th:each="estado : ${T(com.matuprojects.TicketsSystem.model.EstadoTicket).values()}"
+                th:value="${estado}"
+                th:text="${estado}"
+                th:selected="${estado} == ${estadoFiltrado}">
+        </option>
+      </select>
+    </div>
+    <div class="col-auto align-self-end">
+      <button type="submit" class="btn btn-primary">Filtrar</button>
+      <a th:href="@{/admin/tickets}" class="btn btn-secondary ms-2">Limpiar</a>
+    </div>
+  </form>
+
+  <!-- Tabla de tickets -->
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped align-middle">
+      <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Título</th>
+        <th>Descripción</th>
+        <th>Estado</th>
+        <th>Prioridad</th>
+        <th>Fecha de Creación</th>
+        <th>Creado por</th>
+        <th>Asignado a</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="ticket : ${tickets}">
+        <td th:text="${ticket.id}"></td>
+        <td th:text="${ticket.titulo}"></td>
+        <td th:text="${ticket.descripcion}"></td>
+        <td th:text="${ticket.estado}"></td>
+        <td th:text="${ticket.prioridad}"></td>
+        <td th:text="${#temporals.format(ticket.fechaCreacion, 'dd/MM/yyyy HH:mm')}"></td>
+        <td th:text="${ticket.usuarioCreador.nombre}"></td>
+        <td th:text="${ticket.informaticoAsignado != null ? ticket.informaticoAsignado.nombre : 'Sin asignar'}"></td>
+      </tr>
+      <tr th:if="${tickets.isEmpty()}">
+        <td colspan="8" class="text-center">No se encontraron tickets.</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>

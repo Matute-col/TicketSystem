@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::body})}">
+<head>
+    <title>Tickets Asignados</title>
+</head>
+<body>
+<div class="container mt-4">
+    <h2 class="mb-4">Mis Tickets Asignados</h2>
+    <table class="table table-bordered table-hover">
+        <thead class="table-light">
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Descripción</th>
+            <th>Estado</th>
+            <th>Acción</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ticket : ${tickets}">
+            <td th:text="${ticket.id}">1</td>
+            <td th:text="${ticket.titulo}">Título</td>
+            <td th:text="${ticket.descripcion}">Descripción</td>
+            <td>
+                    <span th:switch="${ticket.estado.name()}">
+    <span th:case="'ABIERTO'" class="badge bg-warning text-dark">Abierto</span>
+    <span th:case="'EN_PROCESO'" class="badge bg-info text-dark">En Proceso</span>
+    <span th:case="'CERRADO'" class="badge bg-success">Resuelto</span>
+    <span th:case="*" class="badge bg-secondary">Desconocido</span>
+</span>
+            </td>
+            <td>
+                <form th:action="@{/informatico/resolver}" method="post">
+                    <input type="hidden" name="ticketId" th:value="${ticket.id}" />
+                    <button type="submit" class="btn btn-success btn-sm"
+                            th:if="${ticket.estado != 'CERRADO'}">
+                        Marcar Resuelto
+                    </button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::body})}">
+<head>
+    <title>Nuevo Ticket</title>
+</head>
+<body>
+<div class="card shadow p-4">
+    <h2 class="text-primary">Crear nuevo Ticket</h2>
+    <form th:action="@{/usuario/nuevo/guardar}" th:object="${ticket}" method="post">
+        <div class="mb-3">
+            <label class="form-label">Título</label>
+            <input type="text" th:field="*{titulo}" class="form-control" required>
+            <div class="text-danger" th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Descripción</label>
+            <textarea th:field="*{descripcion}" class="form-control" rows="4" required></textarea>
+            <div class="text-danger" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
+        </div>
+
+        <!-- 👇 Campo para seleccionar la prioridad -->
+        <div class="mb-3">
+            <label class="form-label">Prioridad</label>
+            <select th:field="*{prioridad}" class="form-select" required>
+                <option value="" disabled selected>Seleccione prioridad</option>
+                <option value="BAJA">Baja</option>
+                <option value="MEDIA">Media</option>
+                <option value="ALTA">Alta</option>
+            </select>
+            <div class="text-danger" th:if="${#fields.hasErrors('prioridad')}" th:errors="*{prioridad}"></div>
+        </div>
+
+        <button type="submit" class="btn btn-success">Guardar</button>
+        <a th:href="@{/usuario/panel}" class="btn btn-secondary ms-2">Cancelar</a>
+    </form>
+</div>
+</body>
+</html>

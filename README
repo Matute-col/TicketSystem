@@ -1,0 +1,27 @@
+🎟️ Sistema de Gestión de Tickets – Proyecto de Portafolio
+
+Aplicación web desarrollada con Java y Spring Boot para registrar, asignar y resolver tickets de soporte en una organización. Este sistema incluye control de acceso por roles y vistas personalizadas.
+
+👥 Roles del sistema
+
+- Usuario: Crea tickets y puede consultar su historial.
+- Informático: Visualiza los tickets asignados, los toma y resuelve.
+- Administrador: Gestiona usuarios, asigna tickets y visualiza el estado global del sistema.
+
+⚙️ Tecnologías utilizadas
+
+- Java 17
+- Spring Boot 3
+- Spring Security
+- MySQL
+- Thymeleaf
+- Bootstrap 5
+
+ 📸 Capturas de pantalla
+
+ 🧩 Cómo ejecutar este proyecto localmente
+
+1.Clonar el repositorio:
+```bash
+git clone https://github.com/tu-usuario/ticketing-system.git
+cd ticketing-system

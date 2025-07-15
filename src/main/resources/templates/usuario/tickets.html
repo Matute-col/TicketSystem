@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::body})}">
+<head>
+  <title>Mis Tickets</title>
+</head>
+<body>
+<div class="container mt-4">
+  <h2 class="mb-4">Mis Tickets</h2>
+
+  <!-- Botón para crear nuevo ticket -->
+  <a class="btn btn-success mb-3" th:href="@{/usuario/nuevo}">+ Crear Nuevo Ticket</a>
+
+  <!-- Tabla -->
+  <table class="table table-bordered table-hover align-middle">
+    <thead class="table-light">
+    <tr>
+      <th>ID</th>
+      <th>Título</th>
+      <th>Descripción</th>
+      <th>Estado</th>
+      <th>Fecha</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="ticket : ${tickets}">
+      <td th:text="${ticket.id}"></td>
+      <td th:text="${ticket.titulo}"></td>
+      <td th:text="${ticket.descripcion}"></td>
+      <td>
+        <span th:switch="${ticket.estado.name()}">
+          <span th:case="'ABIERTO'" class="badge bg-warning text-dark">Abierto</span>
+          <span th:case="'EN_PROCESO'" class="badge bg-info text-dark">En proceso</span>
+          <span th:case="'CERRADO'" class="badge bg-success">Cerrado</span>
+          <span th:case="*">Desconocido</span>
+        </span>
+      </td>
+      <td th:text="${#temporals.format(ticket.fechaCreacion, 'dd/MM/yyyy HH:mm')}"></td>
+    </tr>
+
+    <!-- Mostrar mensaje si no hay tickets -->
+    <tr th:if="${tickets.empty}">
+      <td colspan="5" class="text-center">No tienes tickets registrados.</td>
+    </tr>
+
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

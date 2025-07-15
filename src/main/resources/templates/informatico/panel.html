@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title},~{::body})}">
+<head>
+    <title>Panel Informático</title>
+</head>
+<body>
+<div class="container mt-4">
+    <h2 class="mb-4">Tickets Pendientes</h2>
+
+    <!-- Botón para ver tickets asignados -->
+    <div class="mb-3">
+        <a class="btn btn-success" th:href="@{/informatico/asignados}">Ver Tickets Asignados</a>
+    </div>
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-light">
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Descripción</th>
+            <th>Fecha</th>
+            <th>Acción</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ticket : ${ticketsPendientes}">
+            <td th:text="${ticket.id}"></td>
+            <td th:text="${ticket.titulo}"></td>
+            <td th:text="${ticket.descripcion}"></td>
+            <td th:text="${#temporals.format(ticket.fechaCreacion,'dd/MM/yyyy HH:mm')}"></td>
+            <td>
+                <form th:action="@{/informatico/tomar/{id}(id=${ticket.id})}" method="post">
+                    <button class="btn btn-primary btn-sm" type="submit">Tomar</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
